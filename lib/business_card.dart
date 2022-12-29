@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import 'constants.dart';
