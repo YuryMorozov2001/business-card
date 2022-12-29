@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+
+import 'constants.dart';
 
 class BusinessCard extends StatefulWidget {
   const BusinessCard({super.key});
@@ -20,6 +24,7 @@ class _BusinessCardState extends State<BusinessCard> {
 
   void _onStateChange(String stateMachineName, String stateName) {
     _updateMouseCursor();
+    _tapChecker(stateName);
   }
 
   void _updateMouseCursor() {
@@ -30,6 +35,21 @@ class _BusinessCardState extends State<BusinessCard> {
       _cursor = SystemMouseCursors.basic;
     }
     setState(() {});
+  }
+
+  void _tapChecker(String stateName) async {
+    if (links.containsKey(stateName)) {
+      _launchUrl(links[stateName]!);
+    }
+  }
+
+  void _launchUrl(String url) async {
+    if (await canLaunchUrlString(url)) {
+      await Future.delayed(const Duration(milliseconds: 400));
+      await launchUrlString(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
