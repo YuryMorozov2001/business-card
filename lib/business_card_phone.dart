@@ -41,33 +41,32 @@ class BackGroundWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Stack(
-        children: [
-          Container(
-            width: 300,
-            height: 500,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(69),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(69),
+        child: Stack(
+          children: [
+            Container(
+              width: 300,
+              height: 500,
               color: const Color(0xFF171410),
             ),
-          ),
-          Container(
-            width: 300,
-            height: 500,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(69),
-              gradient: RadialGradient(
-                radius: 1,
-                colors: [
-                  const Color(0xFFFF7A00).withOpacity(0.7),
-                  Colors.transparent,
-                ],
-                stops: const [0, .7],
-                tileMode: TileMode.clamp,
+            Container(
+              width: 300,
+              height: 500,
+              decoration: BoxDecoration(
+                gradient: RadialGradient(
+                  radius: 1,
+                  colors: [
+                    const Color(0xFFFF7A00).withOpacity(0.7),
+                    Colors.transparent,
+                  ],
+                  stops: const [0, .7],
+                  tileMode: TileMode.clamp,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
