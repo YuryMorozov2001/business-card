@@ -1,4 +1,9 @@
+import 'dart:math';
+
+import 'package:business_card_web/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class BusinessCardPhone extends StatelessWidget {
   const BusinessCardPhone({super.key});
@@ -26,7 +31,53 @@ class BusinessCardPhone extends StatelessWidget {
                 ],
               ),
             ),
+            const SocialButtons(),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+const svgAssets = {
+  'assets/email.svg': 'mailto:morozovypa1@gmail.com',
+  'assets/telegram.svg': 'https://t.me/yury666morozov',
+  'assets/github.svg': 'https://github.com/YuryMorozov2001',
+  'assets/google_play.svg':
+      'https://play.google.com/store/apps/developer?id=Yury+Morozov',
+};
+
+class SocialButtons extends StatelessWidget {
+  const SocialButtons({super.key});
+
+  void _launchUrl(String url) async {
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 180.0, bottom: 40),
+        child: Transform.rotate(
+          angle: -4 * pi / 180,
+          child: SizedBox(
+            width: 100,
+            child: ListView.separated(
+              separatorBuilder: (context, index) => const SizedBox(height: 10),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: svgAssets.length,
+              itemBuilder: (context, index) => GestureDetector(
+                onTap: () => _launchUrl(svgAssets.values.elementAt(index)),
+                child: SvgPicture.asset(svgAssets.keys.elementAt(index)),
+              ),
+            ),
+          ),
         ),
       ),
     );
